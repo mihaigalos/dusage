@@ -1,0 +1,9 @@
+[package]
+name = "dusage"
+version = "0.0.1"
+edition = "2021"
+description = "A command line disk usage tool."
+categories = ["command-line-utilities"]
+keywords = ["disk", "disk-usage"]
+repository = "https://github.com/mihaigalos/dusage"
+license = "MIT"
