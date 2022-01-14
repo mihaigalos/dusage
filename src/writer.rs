@@ -1,6 +1,7 @@
 use byte_unit::Byte;
 use colored::*;
 
+use crate::colorizer::Colorizer;
 use crate::stats::Stats;
 use crate::util::bargraph;
 pub struct Writer;
@@ -34,11 +35,6 @@ impl Writer {
     }
 
     fn write_stat(stat: Stats, max_width: usize) {
-        let fs = if stat.is_network() {
-            stat.filesystem.cyan()
-        } else {
-            stat.filesystem.normal()
-        };
         let percent = if stat.percent.is_nan() {
             "     -".to_string()
         } else {
@@ -46,7 +42,7 @@ impl Writer {
         };
         print!(
             "{:width$} {:>5} {:>5} {:>5} {} {:20} ",
-            fs,
+            Colorizer::colorize_from_filesystem(stat.filesystem.clone(), stat.is_network()),
             Writer::iec_representation(stat.size),
             Writer::iec_representation(stat.used),
             Writer::iec_representation(stat.avail),
@@ -54,15 +50,7 @@ impl Writer {
             bargraph(stat.percent),
             width = max_width
         );
-        if stat.mount.contains("/boot") || stat.mount == "/" || stat.mount.contains("/home") {
-            println!("{}", stat.mount.blue());
-        } else if stat.mount.contains("/var/log") {
-            println!("{}", stat.mount.white());
-        } else if stat.mount.contains("/mnt") {
-            println!("{}", stat.mount.green());
-        } else {
-            println!("{}", stat.mount);
-        }
+        println!("{}", Colorizer::colorize_from_mountpoint(stat.mount));
     }
 
     fn is_relevant(stat: &Stats) -> bool {
