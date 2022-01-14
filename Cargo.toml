@@ -2,8 +2,14 @@
 name = "dusage"
 version = "0.0.1"
 edition = "2021"
-description = "A command line disk usage tool."
+description = "💾 A command line disk usage tool."
 categories = ["command-line-utilities"]
 keywords = ["disk", "disk-usage"]
 repository = "https://github.com/mihaigalos/dusage"
 license = "MIT"
+
+[dependencies]
+byte-unit = "4.0.13"
+clap = "2.33.2"
+colored = "2"
+nix = "0.18"
