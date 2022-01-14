@@ -24,4 +24,16 @@ impl Colorizer {
             }
         }
     }
+    pub fn colorize_bar_used(input: String, percent: f64) -> ColoredString {
+        if percent > 90.0 {
+            input.red()
+        } else if percent > 75.0 {
+            input.yellow()
+        } else {
+            input.green()
+        }
+    }
+    pub fn colorize_bar_free(input: String) -> ColoredString {
+        input.white().dimmed()
+    }
 }

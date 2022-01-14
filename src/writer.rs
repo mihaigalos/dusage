@@ -3,7 +3,6 @@ use colored::*;
 
 use crate::colorizer::Colorizer;
 use crate::stats::Stats;
-use crate::util::bargraph;
 pub struct Writer;
 
 impl Writer {
@@ -47,7 +46,7 @@ impl Writer {
             Writer::iec_representation(stat.used),
             Writer::iec_representation(stat.avail),
             percent,
-            bargraph(stat.percent),
+            Writer::bargraph(stat.percent),
             width = max_width
         );
         println!("{}", Colorizer::colorize_from_mountpoint(stat.mount));
@@ -55,5 +54,20 @@ impl Writer {
 
     fn is_relevant(stat: &Stats) -> bool {
         stat.size > 0
+    }
+
+    fn bargraph(mut percent: f64) -> String {
+        if percent.is_nan() {
+            percent = 0.0;
+        }
+        let chars = "■■■■■■■■■■■■■■■■■■■■";
+        let one_char_length_in_bytes = chars.chars().take(1).last().unwrap().len_utf8();
+
+        let parts_used = (percent / 10.0).round() as usize * 2;
+        let used_end = parts_used * one_char_length_in_bytes;
+
+        let bar1 = Colorizer::colorize_bar_used(chars[..used_end].to_string(), percent);
+        let bar2 = Colorizer::colorize_bar_free(chars[used_end..].to_string());
+        format!("{}{}", bar1, bar2)
     }
 }
