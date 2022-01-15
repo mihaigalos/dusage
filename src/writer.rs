@@ -15,13 +15,13 @@ impl Writer {
 
     pub fn write(stats: Vec<Stats>, max_width: usize) {
         println!(
-            "{:width$} {:>5} {:>5} {:>5} {:>6} {:20} {}",
+            "{:width$} {:>5} {:>5} {:>5} {:>6} {:>20} {}",
             "Filesystem".yellow(),
             "Size".yellow(),
             "Used".yellow(),
             "Avail".yellow(),
             "Use%".yellow(),
-            "",
+            "Disk / iNodes".yellow(),
             "Mounted on".yellow(),
             width = max_width
         );
@@ -41,7 +41,7 @@ impl Writer {
         };
         print!(
             "{:width$} {:>5} {:>5} {:>5} {} {:20} ",
-            Colorizer::colorize_from_filesystem(stat.filesystem.clone(), stat.is_network()),
+            Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
             Writer::iec_representation(stat.size),
             Writer::iec_representation(stat.used),
             Writer::iec_representation(stat.avail),
@@ -49,7 +49,7 @@ impl Writer {
             Writer::bargraph(stat.percent),
             width = max_width
         );
-        println!("{}", Colorizer::colorize_from_mountpoint(stat.mount));
+        println!("{}", Colorizer::colorize_mountpoint(stat.mount));
     }
 
     fn is_relevant(stat: &Stats) -> bool {
@@ -66,8 +66,8 @@ impl Writer {
         let parts_used = (percent / 10.0).round() as usize * 2;
         let used_end = parts_used * one_char_length_in_bytes;
 
-        let bar1 = Colorizer::colorize_bar_used(chars[..used_end].to_string(), percent);
-        let bar2 = Colorizer::colorize_bar_free(chars[used_end..].to_string());
+        let bar1 = Colorizer::colorize_disk_used(chars[..used_end].to_string(), percent);
+        let bar2 = Colorizer::colorize_disk_free(chars[used_end..].to_string());
         format!("{}{}", bar1, bar2)
     }
 }

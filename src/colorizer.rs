@@ -2,13 +2,13 @@ use colored::*;
 pub struct Colorizer;
 
 impl Colorizer {
-    pub fn colorize_from_filesystem(input: String, is_network: bool) -> ColoredString {
+    pub fn colorize_filesystem(input: String, is_network: bool) -> ColoredString {
         match is_network {
             true => input.cyan(),
             false => input.normal(),
         }
     }
-    pub fn colorize_from_mountpoint(input: String) -> ColoredString {
+    pub fn colorize_mountpoint(input: String) -> ColoredString {
         match input.as_ref() {
             "/" | "/boot" => input.blue(),
             _ => {
@@ -24,7 +24,7 @@ impl Colorizer {
             }
         }
     }
-    pub fn colorize_bar_used(input: String, percent: f64) -> ColoredString {
+    pub fn colorize_disk_used(input: String, percent: f64) -> ColoredString {
         if percent > 90.0 {
             input.red()
         } else if percent > 75.0 {
@@ -33,7 +33,7 @@ impl Colorizer {
             input.green()
         }
     }
-    pub fn colorize_bar_free(input: String) -> ColoredString {
+    pub fn colorize_disk_free(input: String) -> ColoredString {
         input.white().dimmed()
     }
 }
