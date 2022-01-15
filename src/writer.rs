@@ -1,4 +1,5 @@
 use byte_unit::Byte;
+use clap::ArgMatches;
 use colored::*;
 
 use crate::colorizer::Colorizer;
@@ -13,7 +14,14 @@ impl Writer {
             .replace(" ", "")
     }
 
-    pub fn write(stats: Vec<Stats>, max_width: usize) {
+    pub fn write(stats: Vec<Stats>, max_width: usize, args: ArgMatches) {
+        if args.is_present("inodes") {
+            Writer::write_inodes(stats, max_width);
+        } else {
+            Writer::write_disks(stats, max_width);
+        }
+    }
+    pub fn write_disks(stats: Vec<Stats>, max_width: usize) {
         println!(
             "{:width$} {:>5} {:>5} {:>5} {:>6} {:>20} {}",
             "Filesystem".yellow(),
@@ -25,15 +33,32 @@ impl Writer {
             "Mounted on".yellow(),
             width = max_width
         );
-
         for stat in stats {
             if Writer::is_relevant(&stat) {
-                Writer::write_stat(stat, max_width);
+                Writer::write_disk_stat(stat, max_width);
+            }
+        }
+    }
+    pub fn write_inodes(stats: Vec<Stats>, max_width: usize) {
+        println!(
+            "{:width$} {:>10} {:>10} {:>10} {:>6} {:>20} {}",
+            "Filesystem".yellow(),
+            "INodes".yellow(),
+            "IUsed".yellow(),
+            "IFree".yellow(),
+            "IUse%".yellow(),
+            "Disk / iNodes".yellow(),
+            "Mounted on".yellow(),
+            width = max_width
+        );
+        for stat in stats {
+            if Writer::is_relevant(&stat) {
+                Writer::write_inodes_stat(stat, max_width);
             }
         }
     }
 
-    fn write_stat(stat: Stats, max_width: usize) {
+    fn write_disk_stat(stat: Stats, max_width: usize) {
         let percent_disk = if stat.percent_disk.is_nan() {
             "     -".to_string()
         } else {
@@ -46,6 +71,21 @@ impl Writer {
             Writer::iec_representation(stat.used_disk),
             Writer::iec_representation(stat.available_disk),
             percent_disk,
+            Writer::bar(stat.percent_disk),
+            width = max_width
+        );
+        println!("{}", Colorizer::colorize_mountpoint(stat.mount));
+    }
+
+    fn write_inodes_stat(stat: Stats, max_width: usize) {
+        let percent_inodes = format!("{:>5.0}%", stat.percent_inodes);
+        print!(
+            "{:width$} {:>10} {:>10} {:>10} {} {:20} ",
+            Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
+            stat.total_inodes,
+            stat.used_inodes,
+            stat.available_inodes,
+            percent_inodes,
             Writer::bar(stat.percent_disk),
             width = max_width
         );

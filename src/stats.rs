@@ -12,6 +12,7 @@ pub struct Stats {
     pub mount: String,
     pos: usize,
     pub total_inodes: u64,
+    pub used_inodes: u64,
     pub available_inodes: u64,
     pub percent_inodes: f64,
 }
@@ -41,8 +42,9 @@ impl Stats {
             mount: mount.to_string(),
             pos: pos,
             total_inodes: total_inodes,
+            used_inodes: used_inodes,
             available_inodes: available_inodes,
-            percent_inodes: percent_inodes,
+            percent_inodes: 100.0 * percent_inodes,
         }
     }
 
