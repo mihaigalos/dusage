@@ -10,9 +10,12 @@ impl Colorizer {
     }
     pub fn colorize_mountpoint(input: String) -> ColoredString {
         match input.as_ref() {
-            "/" | "/boot" => input.blue(),
+            "/"  => input.blue(),
             _ => {
-                if input.contains("/home") {
+                if input.contains("/boot") {
+                    input.blue()
+                }
+                else if input.contains("/home") {
                     input.blue()
                 } else if input.contains("/var/log") {
                     input.white()
