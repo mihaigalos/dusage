@@ -78,7 +78,11 @@ impl Writer {
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));
     }
     fn write_inodes_stat(stat: Stats, max_width: usize) {
-        let percent_inodes = format!("{:>5.0}%", stat.percent_inodes);
+        let percent_inodes = if stat.percent_inodes.is_nan() {
+            "     -".to_string()
+        } else {
+            format!("{:>5.0}%", stat.percent_inodes)
+        };
         print!(
             "{:width$} {:>10} {:>10} {:>10} {} {:20} ",
             Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
