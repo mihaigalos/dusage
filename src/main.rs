@@ -1,16 +1,19 @@
 extern crate clap;
 extern crate colored;
 extern crate nix;
-
-use clap::{clap_app, crate_version};
+use clap::App;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
-    let _args = clap_app!(dusage =>
-        (version: crate_version!())
-        (author: "Mihai Galos <mihaigalos at gmail dot com>")
-        (about: env!("CARGO_PKG_REPOSITORY"))
-    )
+    let _matches = App::new(concat!(
+        env!("CARGO_CRATE_NAME"),
+        " ",
+        env!("CARGO_PKG_VERSION"),
+        " :: ",
+        env!("CARGO_PKG_REPOSITORY")
+    ))
+    .author(env!("CARGO_PKG_AUTHORS"))
+    .about(env!("CARGO_PKG_DESCRIPTION"))
     .get_matches_safe()
     .unwrap_or_else(|e| e.exit());
 
