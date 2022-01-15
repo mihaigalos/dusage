@@ -24,10 +24,10 @@ impl Colorizer {
             }
         }
     }
-    pub fn colorize_disk_used(input: String, percent: f64) -> ColoredString {
-        if percent > 90.0 {
+    pub fn colorize_disk_used(input: String, percent_disk: f64) -> ColoredString {
+        if percent_disk > 90.0 {
             input.red()
-        } else if percent > 75.0 {
+        } else if percent_disk > 75.0 {
             input.yellow()
         } else {
             input.green()

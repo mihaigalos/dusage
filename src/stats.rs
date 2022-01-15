@@ -8,24 +8,26 @@ pub struct Stats {
     pub size: u64,
     pub used: u64,
     pub avail: u64,
-    pub percent: f64,
+    pub percent_disk: f64,
     pub mount: String,
     pos: usize,
+    pub percent_inodes: f64,
 }
 
 impl Stats {
     pub fn new(fs: &str, size: u64, avail: u64, mount: &str) -> Stats {
         let used = size - avail;
-        let percent = used as f64 / size as f64;
+        let percent_disk = used as f64 / size as f64;
         let pos = grouped_pos_by_length(fs);
         Stats {
             filesystem: fs.to_string(),
             size: size,
             avail: avail,
             used: used,
-            percent: 100.0 * percent,
+            percent_disk: 100.0 * percent_disk,
             mount: mount.to_string(),
             pos: pos,
+            percent_inodes: 0.0,
         }
     }
 

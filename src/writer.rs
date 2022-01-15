@@ -34,10 +34,10 @@ impl Writer {
     }
 
     fn write_stat(stat: Stats, max_width: usize) {
-        let percent = if stat.percent.is_nan() {
+        let percent_disk = if stat.percent_disk.is_nan() {
             "     -".to_string()
         } else {
-            format!("{:>5.0}%", stat.percent)
+            format!("{:>5.0}%", stat.percent_disk)
         };
         print!(
             "{:width$} {:>5} {:>5} {:>5} {} {:20} ",
@@ -45,8 +45,8 @@ impl Writer {
             Writer::iec_representation(stat.size),
             Writer::iec_representation(stat.used),
             Writer::iec_representation(stat.avail),
-            percent,
-            Writer::bargraph(stat.percent),
+            percent_disk,
+            Writer::bar(stat.percent_disk),
             width = max_width
         );
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));
@@ -56,18 +56,21 @@ impl Writer {
         stat.size > 0
     }
 
-    fn bargraph(mut percent: f64) -> String {
-        if percent.is_nan() {
-            percent = 0.0;
+    fn bar_disk(mut percent_disk: f64) -> String {
+        if percent_disk.is_nan() {
+            percent_disk = 0.0;
         }
         let chars = "■■■■■■■■■■■■■■■■■■■■";
         let one_char_length_in_bytes = chars.chars().take(1).last().unwrap().len_utf8();
 
-        let parts_used = (percent / 10.0).round() as usize * 2;
+        let parts_used = (percent_disk / 10.0).round() as usize * 2;
         let used_end = parts_used * one_char_length_in_bytes;
 
-        let bar1 = Colorizer::colorize_disk_used(chars[..used_end].to_string(), percent);
+        let bar1 = Colorizer::colorize_disk_used(chars[..used_end].to_string(), percent_disk);
         let bar2 = Colorizer::colorize_disk_free(chars[used_end..].to_string());
         format!("{}{}", bar1, bar2)
+    }
+    fn bar(percent_disk: f64) -> String {
+        Writer::bar_disk(percent_disk)
     }
 }
