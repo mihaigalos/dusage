@@ -28,9 +28,9 @@ impl Reader {
             match line {
                 Ok(line) => {
                     let fields: Vec<&str> = line.split_whitespace().collect();
-                    let statvfs = match statvfs(fields[ProcFields::Mountpoint.downcast()]){
+                    let statvfs = match statvfs(fields[ProcFields::Mountpoint.downcast()]) {
                         Ok(s) => s,
-                        Err(err) => continue, // i.e.: no permissions to read
+                        Err(_) => continue, // i.e.: no permissions to read
                     };
                     let size_disk = statvfs.blocks() * statvfs.block_size();
                     let available_disk = statvfs.blocks_available() * statvfs.block_size();
