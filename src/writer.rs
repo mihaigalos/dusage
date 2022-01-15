@@ -25,13 +25,13 @@ impl Writer {
     pub fn write_disks(stats: Vec<Stats>, max_width: usize) {
         println!(
             "{:width$} {:>5} {:>5} {:>5} {:>6} {:>20} {}",
-            "Filesystem".yellow(),
-            "Size".yellow(),
-            "Used".yellow(),
-            "Avail".yellow(),
-            "Use%".yellow(),
-            "Disk / INodes".yellow(),
-            "Mounted on".yellow(),
+            "Filesystem".yellow().bold(),
+            "Size".yellow().bold(),
+            "Used".yellow().bold(),
+            "Avail".yellow().bold(),
+            "Use%".yellow().bold(),
+            "Disk / INodes".yellow().bold(),
+            "Mounted on".yellow().bold(),
             width = max_width
         );
         for stat in stats {
@@ -43,13 +43,13 @@ impl Writer {
     pub fn write_inodes(stats: Vec<Stats>, max_width: usize) {
         println!(
             "{:width$} {:>10} {:>10} {:>10} {:>6} {:>20} {}",
-            "Filesystem".yellow(),
-            "INodes".yellow(),
-            "IUsed".yellow(),
-            "IFree".yellow(),
-            "IUse%".yellow(),
-            "Disk / INodes".yellow(),
-            "Mounted on".yellow(),
+            "Filesystem".yellow().bold(),
+            "INodes".yellow().bold(),
+            "IUsed".yellow().bold(),
+            "IFree".yellow().bold(),
+            "IUse%".yellow().bold(),
+            "Disk / INodes".yellow().bold(),
+            "Mounted on".yellow().bold(),
             width = max_width
         );
         for stat in stats {
@@ -72,12 +72,11 @@ impl Writer {
             Writer::iec_representation(stat.used_disk),
             Writer::iec_representation(stat.available_disk),
             percent_disk,
-            Bar::new_disk(stat.percent_disk),
+            Bar::new_disk(stat.percent_disk, stat.percent_inodes),
             width = max_width
         );
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));
     }
-
     fn write_inodes_stat(stat: Stats, max_width: usize) {
         let percent_inodes = format!("{:>5.0}%", stat.percent_inodes);
         print!(
@@ -87,7 +86,7 @@ impl Writer {
             stat.used_inodes,
             stat.available_inodes,
             percent_inodes,
-            Bar::new_disk(stat.percent_disk),
+            Bar::new_disk(stat.percent_disk, stat.percent_inodes),
             width = max_width
         );
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));

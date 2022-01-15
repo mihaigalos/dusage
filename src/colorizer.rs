@@ -36,4 +36,11 @@ impl Colorizer {
     pub fn colorize_disk_free(input: String) -> ColoredString {
         input.white().dimmed()
     }
+    pub fn colorize_inodes_used(input: String, percent_disk: f64) -> ColoredString {
+        if percent_disk > 90.0 {
+            format!("{}", input).on_magenta()
+        } else {
+            format!("{}", input).on_blue()
+        }
+    }
 }
