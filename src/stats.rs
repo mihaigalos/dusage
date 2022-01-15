@@ -5,9 +5,9 @@ use crate::filesystem::Filesystem;
 #[derive(Debug)]
 pub struct Stats {
     pub filesystem: String,
-    pub size: u64,
-    pub used: u64,
-    pub avail: u64,
+    pub size_disk: u64,
+    pub used_disk: u64,
+    pub available_disk: u64,
     pub percent_disk: f64,
     pub mount: String,
     pos: usize,
@@ -15,15 +15,15 @@ pub struct Stats {
 }
 
 impl Stats {
-    pub fn new(fs: &str, size: u64, avail: u64, mount: &str) -> Stats {
-        let used = size - avail;
-        let percent_disk = used as f64 / size as f64;
+    pub fn new(fs: &str, size_disk: u64, available_disk: u64, mount: &str) -> Stats {
+        let used_disk = size_disk - available_disk;
+        let percent_disk = used_disk as f64 / size_disk as f64;
         let pos = grouped_pos_by_length(fs);
         Stats {
             filesystem: fs.to_string(),
-            size: size,
-            avail: avail,
-            used: used,
+            size_disk: size_disk,
+            available_disk: available_disk,
+            used_disk: used_disk,
             percent_disk: 100.0 * percent_disk,
             mount: mount.to_string(),
             pos: pos,

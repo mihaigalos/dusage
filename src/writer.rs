@@ -42,9 +42,9 @@ impl Writer {
         print!(
             "{:width$} {:>5} {:>5} {:>5} {} {:20} ",
             Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
-            Writer::iec_representation(stat.size),
-            Writer::iec_representation(stat.used),
-            Writer::iec_representation(stat.avail),
+            Writer::iec_representation(stat.size_disk),
+            Writer::iec_representation(stat.used_disk),
+            Writer::iec_representation(stat.available_disk),
             percent_disk,
             Writer::bar(stat.percent_disk),
             width = max_width
@@ -53,7 +53,7 @@ impl Writer {
     }
 
     fn is_relevant(stat: &Stats) -> bool {
-        stat.size > 0
+        stat.size_disk > 0
     }
 
     fn bar_disk(mut percent_disk: f64) -> String {
