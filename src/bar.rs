@@ -1,8 +1,16 @@
 use crate::colorizer::Colorizer;
+use colored::*;
 
 pub struct Bar;
 
 impl Bar {
+    fn compute_bar_units(mut percent: f64, bar_unit: String, total_chars: usize) -> usize {
+        if percent.is_nan() {
+            percent = 0.0;
+        }
+        let parts_used = (percent.round() * total_chars as f64 / 100.0).ceil() as usize;
+        parts_used
+    }
     fn compute_used_end(mut percent_disk: f64, chars: &str) -> usize {
         if percent_disk.is_nan() {
             percent_disk = 0.0;
@@ -33,7 +41,26 @@ impl Bar {
     }
 
     pub fn new_disk(percent_disk: f64, percent_inodes: f64) -> String {
-        let bar = Bar::bar_disk(percent_disk);
-        Bar::mixin_inodes(percent_inodes, bar)
+        let bar_length = 20;
+        let mut result = "".to_string();
+        let bar_unit = "■";
+        let count_inode_units =
+            Bar::compute_bar_units(percent_inodes, bar_unit.to_string(), bar_length);
+        let count_disk_units =
+            Bar::compute_bar_units(percent_disk, bar_unit.to_string(), bar_length);
+
+        for i in 0..bar_length {
+            if i < count_disk_units {
+                result = format!("{}{}", result, bar_unit.green());
+            } else {
+                result = format!("{}{}", result, bar_unit);
+            }
+            if i < count_inode_units {
+                result = format!("{}", result.on_blue());
+            } else {
+                result = format!("{}", result);
+            }
+        }
+        result
     }
 }
