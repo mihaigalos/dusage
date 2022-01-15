@@ -45,4 +45,32 @@ impl Colorizer {
             format!("{}", input).on_blue()
         }
     }
+    pub fn colorize_bar(
+        bar_length: usize,
+        bar_unit: &str,
+        count_disk_units: usize,
+        count_inode_units: usize,
+        percent_disk: f64,
+        percent_inodes: f64,
+    ) -> String {
+        let mut result = "".to_string();
+        for i in 0..bar_length {
+            if i < count_disk_units {
+                result = format!(
+                    "{}{}",
+                    result,
+                    Colorizer::colorize_disk_used(bar_unit.to_string(), percent_disk)
+                );
+            } else {
+                result = format!("{}{}", result, bar_unit.white().dimmed());
+            }
+            if i < count_inode_units {
+                result = format!(
+                    "{}",
+                    Colorizer::colorize_inodes_used(result, percent_inodes)
+                );
+            }
+        }
+        result
+    }
 }
