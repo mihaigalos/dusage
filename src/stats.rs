@@ -11,14 +11,27 @@ pub struct Stats {
     pub percent_disk: f64,
     pub mount: String,
     pos: usize,
+    pub total_inodes: u64,
+    pub available_inodes: u64,
     pub percent_inodes: f64,
 }
 
 impl Stats {
-    pub fn new(fs: &str, size_disk: u64, available_disk: u64, mount: &str) -> Stats {
+    pub fn new(
+        fs: &str,
+        size_disk: u64,
+        available_disk: u64,
+        mount: &str,
+        total_inodes: u64,
+        available_inodes: u64,
+    ) -> Stats {
         let used_disk = size_disk - available_disk;
         let percent_disk = used_disk as f64 / size_disk as f64;
         let pos = grouped_pos_by_length(fs);
+
+        let used_inodes = total_inodes - available_inodes;
+        let percent_inodes = used_inodes as f64 / total_inodes as f64;
+
         Stats {
             filesystem: fs.to_string(),
             size_disk: size_disk,
@@ -27,7 +40,9 @@ impl Stats {
             percent_disk: 100.0 * percent_disk,
             mount: mount.to_string(),
             pos: pos,
-            percent_inodes: 0.0,
+            total_inodes: total_inodes,
+            available_inodes: available_inodes,
+            percent_inodes: percent_inodes,
         }
     }
 

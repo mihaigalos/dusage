@@ -29,13 +29,19 @@ impl Reader {
                 Ok(line) => {
                     let fields: Vec<&str> = line.split_whitespace().collect();
                     let statvfs = statvfs(fields[ProcFields::Mountpoint.downcast()]).unwrap();
-                    let size = statvfs.blocks() * statvfs.block_size();
-                    let avail = statvfs.blocks_available() * statvfs.block_size();
+                    let size_disk = statvfs.blocks() * statvfs.block_size();
+                    let available_disk = statvfs.blocks_available() * statvfs.block_size();
+
+                    let total_inodes = statvfs.files();
+                    let available_inodes = statvfs.files_available();
+
                     let s = Stats::new(
                         fields[ProcFields::Filesystem.downcast()],
-                        size,
-                        avail,
+                        size_disk,
+                        available_disk,
                         fields[ProcFields::Mountpoint.downcast()],
+                        total_inodes,
+                        available_inodes,
                     );
 
                     max_width = cmp::max(max_width, s.filesystem.len());
