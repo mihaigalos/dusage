@@ -2,7 +2,8 @@
 
 A command line disk usage tool.
 
-![dusage](screenshots/dusage.png)
+![dusage_disks](screenshots/dusage_disks.png)
+![dusage_inodes](screenshots/dusage_inodes.png)
 
 ### Why?
 
