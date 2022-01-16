@@ -1,5 +1,10 @@
 # dusage
 
+[![CI](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml/badge.svg)](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml)
+[![CD](https://github.com/mihaigalos/dusage/actions/workflows/cd.yaml/badge.svg)](https://github.com/mihaigalos/dusage/actions/workflows/cd.yaml)
+[![crates.io](https://img.shields.io/crates/d/dusage.svg)](https://crates.io/crates/dusage)
+[![LoC](https://tokei.rs/b1/github/mihaigalos/dusage)](https://github.com/mihaigalos/dusage)
+
 A command line disk usage tool.
 
 ![dusage_disks](screenshots/dusage_disks.png)
