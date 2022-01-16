@@ -32,11 +32,12 @@ impl Reader {
                         Ok(s) => s,
                         Err(_) => continue, // i.e.: no permissions to read
                     };
-                    let size_disk = statvfs.blocks() * statvfs.block_size();
-                    let available_disk = statvfs.blocks_available() * statvfs.block_size();
+                    let size_disk = statvfs.blocks() as u64 * statvfs.block_size() as u64;
+                    let available_disk =
+                        statvfs.blocks_available() as u64 * statvfs.block_size() as u64;
 
-                    let total_inodes = statvfs.files();
-                    let available_inodes = statvfs.files_available();
+                    let total_inodes = statvfs.files() as u64;
+                    let available_inodes = statvfs.files_available() as u64;
 
                     let s = Stats::new(
                         fields[ProcFields::Filesystem.downcast()],
