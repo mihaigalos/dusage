@@ -22,3 +22,15 @@ A better interface for `df`.
 * separate coloring of `/`, `/boot` and `/mnt` for easy spotting.
 * [log2ram](https://github.com/azlux/log2ram) filesystem displayed last for easy spotting of log drive usage on Raspberry Pi.
 * display of detailed inode usage (similar to `df -i`).
+
+### Installation
+
+##### Building from source
+
+```bash
+cargo install dusage
+```
+
+##### Using precompiled binaries
+
+Precompiled binaries are available for multiple architectures in [Releases](https://github.com/mihaigalos/dusage/releases).
