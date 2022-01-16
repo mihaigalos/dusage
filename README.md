@@ -7,9 +7,13 @@ A command line disk usage tool.
 
 ### Why?
 
-A better interface for `df` that is still column-compatible but shows other infos as well.
-Features:
+A better interface for `df`.
+
+### Features
+
 * bargraph with disk and inode usage.
+    * background: inodes, foreground: disks.
 * grouping of filesystems.
 * separate coloring of `/`, `/boot` and `/mnt` for easy spotting.
 * [log2ram](https://github.com/azlux/log2ram) filesystem displayed last for easy spotting of log drive usage on Raspberry Pi.
+* display of detailed inode usage (similar to `df -i`).
