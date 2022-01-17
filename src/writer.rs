@@ -11,7 +11,7 @@ impl Writer {
     fn iec_representation(input: u64) -> String {
         Byte::from_bytes(input as u128)
             .get_appropriate_unit(false)
-            .format(0)
+            .format(1)
             .replace(" ", "")
     }
 
@@ -24,7 +24,7 @@ impl Writer {
     }
     pub fn write_disks(stats: Vec<Stats>, max_width: usize) {
         println!(
-            "{:width$} {:>5} {:>5} {:>5} {:>6} {:>20} {}",
+            "{:width$} {:>8} {:>8} {:>8} {:>6} {:>20} {}",
             "Filesystem".yellow().bold(),
             "Size".yellow().bold(),
             "Used".yellow().bold(),
@@ -66,7 +66,7 @@ impl Writer {
             format!("{:>5.0}%", stat.percent_disk)
         };
         print!(
-            "{:width$} {:>5} {:>5} {:>5} {} {:20} ",
+            "{:width$} {:>8} {:>8} {:>8} {} {:20} ",
             Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
             Writer::iec_representation(stat.size_disk),
             Writer::iec_representation(stat.used_disk),
