@@ -13,6 +13,8 @@ impl Writer {
             .get_appropriate_unit(true)
             .format(1)
             .replace(" ", "")
+            .replace("i", "")
+            .replace("B", "")
     }
 
     pub fn write(stats: Vec<Stats>, max_width: usize, args: ArgMatches) {
@@ -103,5 +105,5 @@ impl Writer {
 
 #[test]
 fn test_when_typical() {
-    assert_eq!(Writer::iec_representation(486126166016), "452.7GiB");
+    assert_eq!(Writer::iec_representation(486126166016), "452.7G");
 }
