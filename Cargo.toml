@@ -1,6 +1,6 @@
 [package]
 name = "dusage"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Mihai Galos <mihaigalos@gmail.com>"]
 description = "💾 A command line disk usage information tool.\n\nDisk usage percentage is displayed in a bar with the inode usage percentage as background."
