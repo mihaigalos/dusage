@@ -1,10 +1,10 @@
 [package]
 name = "dusage"
-version = "0.0.3"
+version = "0.1.0"
 edition = "2021"
 authors = ["Mihai Galos <mihaigalos@gmail.com>"]
 description = "💾 A command line disk usage information tool.\n\nDisk usage percentage is displayed in a bar with the inode usage percentage as background."
-categories = ["command-line-utilities"]
+categories = ["command-line-utilities", "filesystem"]
 keywords = ["disk", "disk-usage"]
 repository = "https://github.com/mihaigalos/dusage"
 license = "MIT"
