@@ -10,7 +10,7 @@ pub struct Writer;
 impl Writer {
     fn iec_representation(input: u64) -> String {
         Byte::from_bytes(input as u128)
-            .get_appropriate_unit(false)
+            .get_appropriate_unit(true)
             .format(1)
             .replace(" ", "")
     }
@@ -99,4 +99,9 @@ impl Writer {
     fn is_relevant(stat: &Stats) -> bool {
         stat.size_disk > 0
     }
+}
+
+#[test]
+fn test_when_typical() {
+    assert_eq!(Writer::iec_representation(486126166016), "452.7GiB");
 }
