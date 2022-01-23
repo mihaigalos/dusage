@@ -1,6 +1,7 @@
 extern crate clap;
 extern crate colored;
 extern crate nix;
+use clap::crate_version;
 use clap::{App, Arg};
 
 #[cfg(not(tarpaulin_include))]
@@ -10,7 +11,11 @@ fn main() {
         " ",
         env!("CARGO_PKG_VERSION"),
         " :: ",
-        env!("CARGO_PKG_REPOSITORY")
+        concat!(
+            env!("CARGO_PKG_REPOSITORY"),
+            "/releases/tag/",
+            crate_version!()
+        )
     ))
     .author(env!("CARGO_PKG_AUTHORS"))
     .about(env!("CARGO_PKG_DESCRIPTION"))
