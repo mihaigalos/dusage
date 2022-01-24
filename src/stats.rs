@@ -1,6 +1,7 @@
-use std::cmp::Ordering;
-
 use crate::filesystem::Filesystem;
+use clap::ArgMatches;
+use nix::sys::statvfs::Statvfs;
+use std::cmp::Ordering;
 
 #[derive(Debug)]
 pub struct Stats {
@@ -18,14 +19,13 @@ pub struct Stats {
 }
 
 impl Stats {
-    pub fn new(
-        fs: &str,
-        size_disk: u64,
-        available_disk: u64,
-        mount: &str,
-        total_inodes: u64,
-        available_inodes: u64,
-    ) -> Stats {
+    pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
+        let size_disk = statvfs.blocks() as u64 * statvfs.block_size() as u64;
+        let available_disk = statvfs.blocks_available() as u64 * statvfs.block_size() as u64;
+
+        let total_inodes = statvfs.files() as u64;
+        let available_inodes = statvfs.files_available() as u64;
+
         let used_disk = size_disk - available_disk;
         let percent_disk = used_disk as f64 / size_disk as f64;
         let pos = grouped_pos_by_length(fs);
@@ -33,6 +33,15 @@ impl Stats {
         let used_inodes = total_inodes - available_inodes;
         let percent_inodes = used_inodes as f64 / total_inodes as f64;
 
+        if args.is_present("debug") {
+            println!(
+                "{} blocks: {} size: {} available: {}",
+                fs,
+                statvfs.block_size(),
+                size_disk,
+                available_disk
+            );
+        }
         Stats {
             filesystem: fs.to_string(),
             size_disk: size_disk,

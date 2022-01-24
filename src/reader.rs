@@ -33,29 +33,12 @@ impl Reader {
                         Ok(s) => s,
                         Err(_) => continue, // i.e.: no permissions to read
                     };
-                    let size_disk = statvfs.blocks() as u64 * statvfs.block_size() as u64;
-                    let available_disk =
-                        statvfs.blocks_available() as u64 * statvfs.block_size() as u64;
 
-                    let total_inodes = statvfs.files() as u64;
-                    let available_inodes = statvfs.files_available() as u64;
-
-                    if args.is_present("debug") {
-                        println!(
-                            "{} blocks: {} size: {} available: {}",
-                            fields[ProcFields::Filesystem.downcast()],
-                            statvfs.block_size(),
-                            size_disk,
-                            available_disk
-                        );
-                    }
                     let s = Stats::new(
                         fields[ProcFields::Filesystem.downcast()],
-                        size_disk,
-                        available_disk,
                         fields[ProcFields::Mountpoint.downcast()],
-                        total_inodes,
-                        available_inodes,
+                        statvfs,
+                        args,
                     );
 
                     max_width = cmp::max(max_width, s.filesystem.len());
