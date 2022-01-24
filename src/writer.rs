@@ -72,7 +72,7 @@ impl Writer {
             Colorizer::colorize_filesystem(stat.filesystem.clone(), stat.is_network()),
             Writer::iec_representation(stat.size_disk),
             Writer::iec_representation(stat.used_disk),
-            Writer::iec_representation(stat.available_disk),
+            Writer::iec_representation(stat.free_disk),
             percent_disk,
             Bar::new_disk(stat.percent_disk, stat.percent_inodes),
             width = max_width

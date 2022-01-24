@@ -8,7 +8,7 @@ pub struct Stats {
     pub filesystem: String,
     pub size_disk: u64,
     pub used_disk: u64,
-    pub available_disk: u64,
+    pub free_disk: u64,
     pub percent_disk: f64,
     pub mount: String,
     pos: usize,
@@ -21,12 +21,12 @@ pub struct Stats {
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
         let size_disk = statvfs.blocks() as u64 * statvfs.block_size() as u64;
-        let available_disk = statvfs.blocks_free() as u64 * statvfs.block_size() as u64;
+        let free_disk = statvfs.blocks_free() as u64 * statvfs.block_size() as u64;
 
         let total_inodes = statvfs.files() as u64;
         let available_inodes = statvfs.files_available() as u64;
 
-        let used_disk = size_disk - available_disk;
+        let used_disk = size_disk - free_disk;
         let percent_disk = used_disk as f64 / size_disk as f64;
         let pos = grouped_pos_by_length(fs);
 
@@ -40,13 +40,13 @@ impl Stats {
                 statvfs.blocks(),
                 statvfs.block_size(),
                 size_disk,
-                available_disk
+                free_disk
             );
         }
         Stats {
             filesystem: fs.to_string(),
             size_disk: size_disk,
-            available_disk: available_disk,
+            free_disk: free_disk,
             used_disk: used_disk,
             percent_disk: 100.0 * percent_disk,
             mount: mount.to_string(),
