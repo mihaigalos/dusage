@@ -35,8 +35,9 @@ impl Stats {
 
         if args.is_present("debug") {
             println!(
-                "{} blocks: {} size: {} available: {}",
+                "{} blocks: {} block_size: {} size: {} available: {}",
                 fs,
+                statvfs.blocks(),
                 statvfs.block_size(),
                 size_disk,
                 available_disk
