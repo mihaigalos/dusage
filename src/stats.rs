@@ -21,7 +21,7 @@ pub struct Stats {
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
         let size_disk = statvfs.blocks() as u64 * statvfs.block_size() as u64;
-        let available_disk = statvfs.blocks_available() as u64 * statvfs.block_size() as u64;
+        let available_disk = statvfs.blocks_free() as u64 * statvfs.block_size() as u64;
 
         let total_inodes = statvfs.files() as u64;
         let available_inodes = statvfs.files_available() as u64;
