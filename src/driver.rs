@@ -6,7 +6,7 @@ pub struct Driver;
 
 impl Driver {
     pub fn drive(args: ArgMatches) {
-        let (stats, max_width) = Reader::read();
+        let (stats, max_width) = Reader::read(&args);
         Writer::write(stats, max_width, args);
     }
 }

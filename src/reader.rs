@@ -1,3 +1,4 @@
+use clap::ArgMatches;
 use nix::sys::statvfs::statvfs;
 use std::cmp;
 use std::fs::File;
@@ -11,7 +12,7 @@ use crate::stats::Stats;
 pub struct Reader;
 
 impl Reader {
-    pub fn read() -> (Vec<Stats>, usize) {
+    pub fn read(args: &ArgMatches) -> (Vec<Stats>, usize) {
         let file = match File::open("/proc/mounts") {
             Ok(f) => f,
             Err(e) => {
@@ -39,6 +40,15 @@ impl Reader {
                     let total_inodes = statvfs.files() as u64;
                     let available_inodes = statvfs.files_available() as u64;
 
+                    if args.is_present("debug") {
+                        println!(
+                            "{} blocks: {} size: {} available: {}",
+                            fields[ProcFields::Filesystem.downcast()],
+                            statvfs.block_size(),
+                            size_disk,
+                            available_disk
+                        );
+                    }
                     let s = Stats::new(
                         fields[ProcFields::Filesystem.downcast()],
                         size_disk,

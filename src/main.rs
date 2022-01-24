@@ -20,6 +20,12 @@ fn main() {
     .author(env!("CARGO_PKG_AUTHORS"))
     .about(env!("CARGO_PKG_DESCRIPTION"))
     .arg(
+        Arg::with_name("debug")
+            .long("debug")
+            .short("d")
+            .help("Print raw data used in statistics."),
+    )
+    .arg(
         Arg::with_name("inodes")
             .long("inodes")
             .short("i")
