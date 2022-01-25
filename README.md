@@ -30,6 +30,18 @@ A better interface for `df`.
 ```bash
 cargo install dusage
 ```
+##### NetBSD ([Official repositories])
+```bash
+pkgin install dusage
+```
+
+or, if you prefer to build it from source
+```bash
+cd /usr/pkgsrc/sysutils/dusage
+make install
+```
+
+[Official repositories]: https://pkgsrc.se/sysutils/dusage/
 
 ##### Using precompiled binaries
 
