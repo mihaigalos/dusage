@@ -17,7 +17,11 @@ impl Writer {
             .replace("B", "")
     }
 
-    pub fn write(stats: Vec<Stats>, max_width: usize, args: ArgMatches) {
+    pub fn write(stats: Vec<Stats>, mut max_width: usize, args: ArgMatches) {
+        let min_width = 12;
+        if max_width < min_width {
+            max_width = min_width;
+        }
         if args.is_present("inodes") {
             Writer::write_inodes(stats, max_width);
         } else {
