@@ -27,7 +27,6 @@ def fuzzy_compare(left, right, threshold) -> bool:
 
     return result
 
-
 class TestFixture(unittest.TestCase):
     def executeCommand(self, command_key, command, args):
         file = os.popen(f"{command} {args}")
@@ -48,8 +47,6 @@ class TestFixture(unittest.TestCase):
     def tearDown(self):
         for f in self.open_files:
             f.close()
-
-
 
     def test_size_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
