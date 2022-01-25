@@ -20,8 +20,13 @@ def remove_units(input):
 def fuzzy_compare(left, right, threshold) -> bool:
     left = float(remove_units(left))
     right = float(remove_units(right))
+    result = abs(left - right) <= threshold
 
-    return abs(left - right) <= threshold
+    if result == False:
+        print(f"Threshold overstepped: {left}     {right}   by {result}")
+
+    return result
+
 
 class TestFixture(unittest.TestCase):
     def executeCommand(self, command, args):
