@@ -82,6 +82,11 @@ jobs:
           use-cross: ${{ matrix.job.use-cross }}
           args: --release --target ${{ matrix.job.target }}
 
+      - name: Generate Cargo Lockfile for easy package updates under NetBSD
+        shell: bash
+        run: |
+          cargo generate-lockfile
+
       - name: Packaging final binary
         shell: bash
         env:

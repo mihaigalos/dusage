@@ -35,6 +35,9 @@ pack() {
     cp README.md "$tempdir/$package_name"
     cp LICENSE.md "$tempdir/$package_name"
 
+    # Cargo.lock for easy updating NetBSD packages
+    cp Cargo.lock "$tempdir/$package_name"
+
     # archiving
     pushd "$tempdir"
     if [ "$OS_NAME" = windows-latest ]; then
