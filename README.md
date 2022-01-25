@@ -35,7 +35,8 @@ cargo install dusage
 pkgin install dusage
 ```
 
-or, if you prefer to build it from source
+Or if you prefer to build it from source:
+
 ```bash
 cd /usr/pkgsrc/sysutils/dusage
 make install
