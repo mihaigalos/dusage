@@ -23,7 +23,7 @@ def fuzzy_compare(left, right, threshold) -> bool:
     result = abs(left - right) <= threshold
 
     if result == False:
-        print(f"Threshold overstepped: {left}     {right}   by {result}")
+        print(f"Threshold overstepped:  {left} vs {right}")
 
     return result
 
@@ -53,7 +53,7 @@ class TestFixture(unittest.TestCase):
 
     def test_size_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys():
+            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Size.value]
                 right = self.data["cargo"][key_df][Fields.Size.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
@@ -61,7 +61,7 @@ class TestFixture(unittest.TestCase):
 
     def test_used_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys():
+            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Used.value]
                 right = self.data["cargo"][key_df][Fields.Used.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
@@ -69,7 +69,7 @@ class TestFixture(unittest.TestCase):
 
     def test_available_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys():
+            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Available.value]
                 right = self.data["cargo"][key_df][Fields.Available.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
@@ -77,7 +77,7 @@ class TestFixture(unittest.TestCase):
 
     def test_used_percent_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys():
+            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Available.value]
                 right = self.data["cargo"][key_df][Fields.Available.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
