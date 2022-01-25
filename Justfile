@@ -8,3 +8,4 @@ build:
 
 test: build
     cargo test  --verbose --all
+    ./target/debug/dusage
