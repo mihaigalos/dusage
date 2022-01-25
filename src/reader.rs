@@ -29,14 +29,14 @@ impl Reader {
             match line {
                 Ok(line) => {
                     let fields: Vec<&str> = line.split_whitespace().collect();
-                    let statvfs = match statvfs(fields[ProcFields::Mountpoint.downcast()]) {
+                    let statvfs = match statvfs(fields[ProcFields::Mountpoint.upcast()]) {
                         Ok(s) => s,
                         Err(_) => continue, // i.e.: no permissions to read
                     };
 
                     let s = Stats::new(
-                        fields[ProcFields::Filesystem.downcast()],
-                        fields[ProcFields::Mountpoint.downcast()],
+                        fields[ProcFields::Filesystem.upcast()],
+                        fields[ProcFields::Mountpoint.upcast()],
                         statvfs,
                         args,
                     );

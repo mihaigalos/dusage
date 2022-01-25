@@ -4,7 +4,7 @@ pub enum ProcFields {
 }
 
 impl ProcFields {
-    pub fn downcast(self) -> usize {
+    pub fn upcast(self) -> usize {
         self as usize
     }
 }
