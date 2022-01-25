@@ -29,21 +29,21 @@ def fuzzy_compare(left, right, threshold) -> bool:
 
 
 class TestFixture(unittest.TestCase):
-    def executeCommand(self, command, args):
+    def executeCommand(self, command_key, command, args):
         file = os.popen(f"{command} {args}")
         self.open_files.append(file)
         out = [s.split() for s in file.read().splitlines()]
-        self.data[command] = {}
+        self.data[command_key] = {}
         for row in out[1:]:
             key = row[0]
-            self.data[command][key] = row[1:]
+            self.data[command_key][key] = row[1:]
 
 
     def setUp(self):
         self.open_files = []
         self.data = {}
-        self.executeCommand("df", "-h")
-        self.executeCommand("cargo", "run")
+        self.executeCommand("df", "df", "-h")
+        self.executeCommand("dusage", "cargo", "run")
 
     def tearDown(self):
         for f in self.open_files:
@@ -53,33 +53,33 @@ class TestFixture(unittest.TestCase):
 
     def test_size_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
+            if key_df in self.data["dusage"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Size.value]
-                right = self.data["cargo"][key_df][Fields.Size.value]
+                right = self.data["dusage"][key_df][Fields.Size.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
                 self.assertTrue(is_below_threshold)
 
     def test_used_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
+            if key_df in self.data["dusage"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Used.value]
-                right = self.data["cargo"][key_df][Fields.Used.value]
+                right = self.data["dusage"][key_df][Fields.Used.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
                 self.assertTrue(is_below_threshold)
 
     def test_available_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
+            if key_df in self.data["dusage"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Available.value]
-                right = self.data["cargo"][key_df][Fields.Available.value]
+                right = self.data["dusage"][key_df][Fields.Available.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
                 self.assertTrue(is_below_threshold)
 
     def test_used_percent_same_whenTypical(self):
         for key_df, value_df in self.data["df"].items():
-            if key_df in self.data["cargo"].keys() and key_df != "tmpfs":
+            if key_df in self.data["dusage"].keys() and key_df != "tmpfs":
                 left = value_df[Fields.Available.value]
-                right = self.data["cargo"][key_df][Fields.Available.value]
+                right = self.data["dusage"][key_df][Fields.Available.value]
                 is_below_threshold = fuzzy_compare(left, right, allowed_difference_threshold)
                 self.assertTrue(is_below_threshold)
 
