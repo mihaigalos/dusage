@@ -35,9 +35,6 @@ pack() {
     cp README.md "$tempdir/$package_name"
     cp LICENSE.md "$tempdir/$package_name"
 
-    # Cargo.lock for easy updating NetBSD packages
-    cp Cargo.lock "$tempdir/$package_name"
-
     # archiving
     pushd "$tempdir"
     if [ "$OS_NAME" = windows-latest ]; then
@@ -60,9 +57,9 @@ make_deb() {
     local homepage
     local maintainer
 
-    homepage="https://github.com/mihaigalos/dusage"
-    maintainer="Mihai Galos <mihaigalos@gmail.com>"
-    copyright_years="2021 - "$(date "+%Y")
+    homepage=$(cat Cargo.toml | grep repository| cut -d'=' -f2 | sed -e "s/^\s//g")
+    maintainer=$(cat Cargo.toml | grep authors | cut -d'=' -f2 | sed -e "s/^\s//g" -e "s/\[//g" -e "s/\]//g" | cut -d ',' -f1)
+    copyright_years="2022 - "$(date "+%Y")
     description=$(cat Cargo.toml| grep description| cut -d'=' -f2 | sed -e "s/^\s//g" -e "s/\\\n/\n/g")
     case $TARGET in
         x86_64*)
