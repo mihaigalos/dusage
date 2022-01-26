@@ -5,7 +5,7 @@
 [![crates.io](https://img.shields.io/crates/d/dusage.svg)](https://crates.io/crates/dusage)
 [![LoC](https://tokei.rs/b1/github/mihaigalos/dusage)](https://github.com/mihaigalos/dusage)
 
-A command line disk usage tool.
+A command line disk usage information tool.
 
 ![dusage_disks](screenshots/dusage_disks.png)
 ![dusage_inodes](screenshots/dusage_inodes.png)
