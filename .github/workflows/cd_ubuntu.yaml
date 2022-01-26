@@ -1,0 +1,13 @@
+name: cd_ubuntu
+
+on: [workflow_dispatch]
+
+jobs:
+  CD-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Install Commands
+        run: |
+          sudo apt-get install \
+            devscripts
+            dput
