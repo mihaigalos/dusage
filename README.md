@@ -14,6 +14,12 @@ A command line disk usage tool.
 
 A better interface for `df`.
 
+### BTW
+
+You might also like [`musage`](https://github.com/mihaigalos/musage).
+
+Both can be i.e. automatically executed upon login via `ssh` to a remote machine by invoking them in the remote's `.bashrc` or `.zshrc`.
+
 ### Features
 
 * bargraph with disk and inode usage.
