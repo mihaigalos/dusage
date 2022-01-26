@@ -157,7 +157,7 @@ Package: $dpkgname
 Version: $version
 Section: utils
 Priority: optional
-Maintainer: Dan Davison <dandavison7@gmail.com>
+Maintainer: $maintainer
 Architecture: $architecture
 Depends: $depends
 Provides: $PROJECT_NAME
