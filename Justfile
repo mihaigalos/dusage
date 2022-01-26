@@ -8,7 +8,7 @@ build:
 
 test: build
     cargo test  --verbose --all
-    ./target/debug/dusage --debug
+    ./target/debug/{{ tool }} --debug
     df -h
     df
     python3 -m unittest discover test/
