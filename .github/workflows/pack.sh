@@ -63,7 +63,7 @@ make_deb() {
     homepage="https://github.com/mihaigalos/dusage"
     maintainer="Mihai Galos <mihaigalos@gmail.com>"
     copyright_years="2021 - "$(date "+%Y")
-
+    description=$(cat Cargo.toml| grep description| cut -d'=' -f2 | sed -e "s/^\s//g" -e "s/\\\n/\n/g")
     case $TARGET in
         x86_64*)
             architecture=amd64
@@ -162,9 +162,7 @@ Architecture: $architecture
 Depends: $depends
 Provides: $PROJECT_NAME
 Conflicts: $conflictname
-Description: Syntax highlighter for git.
- Delta provides language syntax-highlighting, within-line insertion/deletion
- detection, and restructured diff output for git on the command line.
+Description: $description
 EOF
 
     fakeroot dpkg-deb --build "$tempdir" "${dpkgname}_${version}_${architecture}.deb"
