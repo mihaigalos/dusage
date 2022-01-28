@@ -21,9 +21,9 @@ checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
 name = "autoclap"
-version = "0.1.2"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d58b516dd65690a3bf487a2b2b5a24604901aba07ab659e6ba53aaa18bcb7333"
+checksum = "a944dbd5c7a6d9fa15678482679f4b256ed5204562716318c669aecca363a815"
 dependencies = [
  "clap",
 ]
