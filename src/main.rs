@@ -2,12 +2,14 @@ extern crate clap;
 extern crate colored;
 extern crate nix;
 
-use autoclap::autoclap;
+use autoclap;
+use clap::App;
 use clap::Arg;
+use std::env;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
-    let app: clap::App<'static> = autoclap();
+    let app: clap::App<'static> = autoclap::autoclap!();
     let args = app
         .author(env!("CARGO_PKG_AUTHORS"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
