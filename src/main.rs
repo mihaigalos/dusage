@@ -9,7 +9,7 @@ use std::env;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
-    let app: clap::App<'static> = autoclap::autoclap!();
+    let app: clap::App = autoclap::autoclap!();
     let args = app
         .arg(
             Arg::new("inodes")
