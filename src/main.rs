@@ -11,8 +11,6 @@ use std::env;
 fn main() {
     let app: clap::App<'static> = autoclap::autoclap!();
     let args = app
-        .author(env!("CARGO_PKG_AUTHORS"))
-        .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(
             Arg::new("inodes")
                 .long("inodes")
