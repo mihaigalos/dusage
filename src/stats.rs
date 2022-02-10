@@ -35,15 +35,22 @@ impl Stats {
         let percent_inodes = used_inodes as f64 / total_inodes as f64;
 
         if args.is_present("debug") {
-            println!(
-                "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
-                fs,
-                statvfs.blocks(),
-                statvfs.fragment_size(),
-                size_disk,
-                free_disk,
-                available_disk
-            );
+            if !args.is_present("inodes") {
+                println!(
+                    "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
+                    fs,
+                    statvfs.blocks(),
+                    statvfs.fragment_size(),
+                    size_disk,
+                    free_disk,
+                    available_disk
+                );
+            } else {
+                println!(
+                    "{} total_inodes: {} iused: {} ifree: {} iused%: {}",
+                    fs, total_inodes, used_inodes, available_inodes, percent_inodes
+                );
+            }
         }
         Stats {
             filesystem: fs.to_string(),
