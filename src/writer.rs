@@ -23,12 +23,12 @@ impl Writer {
             max_width = min_width;
         }
         if args.is_present("inodes") {
-            Writer::write_inodes(stats, max_width);
+            Writer::write_inodes(stats, max_width, args);
         } else {
-            Writer::write_disks(stats, max_width);
+            Writer::write_disks(stats, max_width, args);
         }
     }
-    pub fn write_disks(stats: Vec<Stats>, max_width: usize) {
+    pub fn write_disks(stats: Vec<Stats>, max_width: usize, args: ArgMatches) {
         println!(
             "{:width$} {:>8} {:>8} {:>8} {:>6} {:>20} {}",
             "Filesystem".yellow().bold(),
@@ -40,13 +40,14 @@ impl Writer {
             "Mounted on".yellow().bold(),
             width = max_width
         );
+        let is_copy_friendly = args.is_present("copy_friendly");
         for stat in stats {
             if Writer::is_relevant(&stat) {
-                Writer::write_disk_stat(stat, max_width);
+                Writer::write_disk_stat(stat, max_width, is_copy_friendly);
             }
         }
     }
-    pub fn write_inodes(stats: Vec<Stats>, max_width: usize) {
+    pub fn write_inodes(stats: Vec<Stats>, max_width: usize, args: ArgMatches) {
         println!(
             "{:width$} {:>10} {:>10} {:>10} {:>6} {:>20} {}",
             "Filesystem".yellow().bold(),
@@ -58,14 +59,15 @@ impl Writer {
             "Mounted on".yellow().bold(),
             width = max_width
         );
+        let is_copy_friendly = args.is_present("copy_friendly");
         for stat in stats {
             if Writer::is_relevant(&stat) {
-                Writer::write_inodes_stat(stat, max_width);
+                Writer::write_inodes_stat(stat, max_width, is_copy_friendly);
             }
         }
     }
 
-    fn write_disk_stat(stat: Stats, max_width: usize) {
+    fn write_disk_stat(stat: Stats, max_width: usize, is_copy_friendly: bool) {
         let percent_disk = if stat.percent_disk.is_nan() {
             "     -".to_string()
         } else {
@@ -78,12 +80,12 @@ impl Writer {
             Writer::iec_representation(stat.used_disk),
             Writer::iec_representation(stat.available_disk),
             percent_disk,
-            Bar::new_disk(stat.percent_disk, stat.percent_inodes),
+            Bar::new_disk(stat.percent_disk, stat.percent_inodes, is_copy_friendly),
             width = max_width
         );
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));
     }
-    fn write_inodes_stat(stat: Stats, max_width: usize) {
+    fn write_inodes_stat(stat: Stats, max_width: usize, is_copy_friendly: bool) {
         let percent_inodes = if stat.percent_inodes.is_nan() {
             "     -".to_string()
         } else {
@@ -96,7 +98,7 @@ impl Writer {
             stat.used_inodes,
             stat.available_inodes,
             percent_inodes,
-            Bar::new_disk(stat.percent_disk, stat.percent_inodes),
+            Bar::new_disk(stat.percent_disk, stat.percent_inodes, is_copy_friendly),
             width = max_width
         );
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));

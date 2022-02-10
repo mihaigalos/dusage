@@ -48,12 +48,18 @@ impl Colorizer {
     pub fn colorize_bar(
         bar_length: usize,
         bar_unit: &str,
+        bar_unit_empty: &str,
+        is_copy_friendly: bool,
         count_disk_units: usize,
         count_inode_units: usize,
         percent_disk: f64,
         percent_inodes: f64,
     ) -> String {
         let mut result = "".to_string();
+        let background = match is_copy_friendly {
+            true => bar_unit_empty.white(),
+            false => bar_unit.white().dimmed(),
+        };
         for i in 0..bar_length {
             if i < count_disk_units {
                 result = format!(
@@ -62,7 +68,7 @@ impl Colorizer {
                     Colorizer::colorize_disk_used(bar_unit.to_string(), percent_disk)
                 );
             } else {
-                result = format!("{}{}", result, bar_unit.white().dimmed());
+                result = format!("{}{}", result, background);
             }
             if i < count_inode_units {
                 result = format!(

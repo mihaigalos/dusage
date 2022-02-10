@@ -17,6 +17,12 @@ fn main() {
                 .short('i')
                 .help("Display inode information."),
         )
+        .arg(
+            Arg::new("copy_friendly")
+                .long("copy_friendly")
+                .short('c')
+                .help("Monocrome-friendly background for easy copy-pasting elsewhere."),
+        )
         .try_get_matches()
         .unwrap_or_else(|e| e.exit());
 
