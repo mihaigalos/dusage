@@ -21,13 +21,9 @@ jobs:
       - name: Cargo version matches tag
         if: github.event_name == 'push'
         run: |
-          function ok() {
-            echo -e "\e[1;32mOK\e[0m"
-          }  
-          function err() {
-            echo -e "\e[1;31m${@}\e[0m" >&2
-            exit 1
-          }
+          err() { echo -e "\e[1;31m${@}\e[0m" >&2; exit 1; }
+          ok() { echo -e "\e[1;32mOK\e[0m"; }
+          highlight() { echo -en "\e[1;37m${@}\e[0m"; }
 
           CRATE_VERSION=$(cat Cargo.toml | grep -e "^version" | head -1 | cut -d '=' -f2 | sed -e "s/ //" -e "s/\"//g")
           [[ $GITHUB_REF == *"refs/tags"* ]] && TAG=$GITHUB_REF || err "Cannot determine git tag."
