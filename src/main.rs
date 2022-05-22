@@ -3,13 +3,13 @@ extern crate colored;
 extern crate nix;
 
 use autoclap::autoclap;
-use clap::App;
 use clap::Arg;
-use std::env;
+use clap::Command;
 
 #[cfg(not(tarpaulin_include))]
 fn main() {
-    let app: clap::App = autoclap!();
+    let app: clap::Command = autoclap!();
+
     let args = app
         .arg(
             Arg::new("inodes")
