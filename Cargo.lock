@@ -93,7 +93,7 @@ dependencies = [
 
 [[package]]
 name = "dusage"
-version = "0.2.3"
+version = "0.3.1"
 dependencies = [
  "autoclap",
  "byte-unit",

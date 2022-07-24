@@ -25,7 +25,7 @@ Both can be i.e. automatically executed upon login via `ssh` to a remote machine
 * separate coloring of `/`, `/boot` and `/mnt` for easy spotting.
 * [log2ram](https://github.com/azlux/log2ram) filesystem displayed last for easy spotting of log drive usage on Raspberry Pi.
 * display of detailed inode usage (similar to `df -i`).
-* copy-friendly output (via the `--copy_friendly` flag:
+* copy-friendly output (via the `--copy-friendly` flag:
   ```
   Filesystem                 Size     Used    Avail   Use%        Disk / INodes Mounted on
   /dev/sdb1                  4.6G   270.1M     4.1G     6% ■■□□□□□□□□□□□□□□□□□□ /boot
