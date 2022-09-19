@@ -42,7 +42,7 @@ Filesystem                 Size     Used    Avail   Use%        Disk / INodes Mo
 cargo install dusage
 ```
 
-### NetBSD ([Official repositories])
+### NetBSD ([Official repositories](https://pkgsrc.se/sysutils/dusage))
 
 ```bash
 pkgin install dusage
@@ -54,8 +54,6 @@ Or if you prefer to build it from source:
 cd /usr/pkgsrc/sysutils/dusage
 make install
 ```
-
-[official repositories]: https://pkgsrc.se/sysutils/dusage/
 
 ### Using precompiled binaries
 
