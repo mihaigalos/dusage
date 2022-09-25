@@ -1,6 +1,17 @@
 use colored::*;
 pub struct Colorizer;
 
+pub struct ColorizerBarConfig<'a> {
+    pub bar_length: usize,
+    pub bar_unit: &'a str,
+    pub bar_unit_empty: &'a str,
+}
+
+pub struct Percentages {
+    pub percent_disk: f64,
+    pub percent_inodes: f64,
+}
+
 impl Colorizer {
     pub fn colorize_filesystem(input: String, is_network: bool) -> ColoredString {
         match is_network {
@@ -44,26 +55,26 @@ impl Colorizer {
         }
     }
     pub fn colorize_bar(
-        bar_length: usize,
-        bar_unit: &str,
-        bar_unit_empty: &str,
+        bar_config: ColorizerBarConfig,
         is_copy_friendly: bool,
         count_disk_units: usize,
         count_inode_units: usize,
-        percent_disk: f64,
-        percent_inodes: f64,
+        percetages: Percentages,
     ) -> String {
         let mut result = "".to_string();
         let background = match is_copy_friendly {
-            true => bar_unit_empty.white(),
-            false => bar_unit.white().dimmed(),
+            true => bar_config.bar_unit_empty.white(),
+            false => bar_config.bar_unit.white().dimmed(),
         };
-        for i in 0..bar_length {
+        for i in 0..bar_config.bar_length {
             if i < count_disk_units {
                 result = format!(
                     "{}{}",
                     result,
-                    Colorizer::colorize_disk_used(bar_unit.to_string(), percent_disk)
+                    Colorizer::colorize_disk_used(
+                        bar_config.bar_unit.to_string(),
+                        percetages.percent_disk
+                    )
                 );
             } else {
                 result = format!("{}{}", result, background);
@@ -71,7 +82,7 @@ impl Colorizer {
             if i < count_inode_units {
                 result = format!(
                     "{}",
-                    Colorizer::colorize_inodes_used(result, percent_inodes)
+                    Colorizer::colorize_inodes_used(result, percetages.percent_inodes)
                 );
             }
         }
