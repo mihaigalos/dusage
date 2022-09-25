@@ -14,7 +14,7 @@ impl Filesystem {
             _ => {
                 if fs.starts_with("/dev/") {
                     Filesystem::Dev
-                } else if fs.contains(":") {
+                } else if fs.contains(':') {
                     Filesystem::Network
                 } else {
                     Filesystem::Default

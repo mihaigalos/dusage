@@ -54,15 +54,15 @@ impl Stats {
         }
         Stats {
             filesystem: fs.to_string(),
-            size_disk: size_disk,
-            used_disk: used_disk,
-            available_disk: available_disk,
+            size_disk,
+            used_disk,
+            available_disk,
             percent_disk: 100.0 * percent_disk,
             mount: mount.to_string(),
-            pos: pos,
-            total_inodes: total_inodes,
-            used_inodes: used_inodes,
-            available_inodes: available_inodes,
+            pos,
+            total_inodes,
+            used_inodes,
+            available_inodes,
             percent_inodes: 100.0 * percent_inodes,
         }
     }
@@ -75,7 +75,7 @@ impl Stats {
 fn grouped_pos_by_length(fs: &str) -> usize {
     let mut result = Filesystem::new(fs) as usize;
     if fs.starts_with("/dev") {
-        result = result + fs.len();
+        result += fs.len();
     }
     result
 }

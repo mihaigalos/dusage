@@ -12,9 +12,7 @@ impl Colorizer {
         match input.as_ref() {
             "/" => input.blue(),
             _ => {
-                if input.contains("/boot") {
-                    input.blue()
-                } else if input.contains("/home") {
+                if input.contains("/boot") || input.contains("/home") {
                     input.blue()
                 } else if input.contains("/var/log") {
                     input.white()
@@ -40,9 +38,9 @@ impl Colorizer {
     }
     pub fn colorize_inodes_used(input: String, percent_disk: f64) -> ColoredString {
         if percent_disk > 90.0 {
-            format!("{}", input).on_magenta()
+            input.on_magenta()
         } else {
-            format!("{}", input).on_blue()
+            input.on_blue()
         }
     }
     pub fn colorize_bar(

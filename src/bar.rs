@@ -24,7 +24,7 @@ impl Bar {
         if percent.is_nan() {
             percent = 0.0;
         }
-        let parts_used = (percent.round() * total_chars as f64 / 100.0).ceil() as usize;
-        parts_used
+        
+        (percent.round() * total_chars as f64 / 100.0).ceil() as usize
     }
 }
