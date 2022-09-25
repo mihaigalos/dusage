@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     paths-ignore:
@@ -11,77 +10,22 @@ on:
       - '*.md'
       - 'screenshots/**'
     branches: [ main ]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
+  workflow_dispatch: # Run with Run Workflow button in the GitHub Action Job, set debug_enabled=true for an interactive ssh session.
+    inputs:
+      debug_enabled:
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
+        required: false
+        default: false
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - uses: extractions/setup-just@v1
-      with:
-        just-version: 0.10.2  # optional semver specification, otherwise latest
-
-    - name: Cargo Cache
-      uses: actions/cache@v1
-      with:
-        path: ~/.cargo
-        key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-${{ hashFiles('Cargo.toml') }}
-          ${{ runner.os }}-cargo
-
-    - name: Cargo Target Cache
-      uses: actions/cache@v1
-      with:
-        path: target
-        key: ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
-        restore-keys: |
-          ${{ runner.os }}-cargo-target-${{ hashFiles('Cargo.toml') }}
-          ${{ runner.os }}-cargo-target
-
-    - name: Run tests
-      run: |
-        just test
-
-  coverage:
-    if: ${{ false }}  # disable for now
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: extractions/setup-just@v1
-        with:
-          just-version: 0.10.2  # optional semver specification, otherwise latest
-
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - name: Build backend dockers
-        run: |
-          just build True
-
-      - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
-        with:
-          version: '0.18.5'
-          args: '-- --test-threads 1'
-
-      - name: Upload to codecov.io
-        uses: codecov/codecov-action@v1.0.2
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
-
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v1
-        with:
-          name: code-coverage-report
-          path: cobertura.xml 
+  ci:
+    uses: mihaigalos/config/.github/workflows/rust-ci.yaml@main
+    if: ${{ github.event_name == 'push' || !github.event.pull_request.draft }}
