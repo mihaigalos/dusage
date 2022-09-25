@@ -18,8 +18,8 @@ fn main() {
                 .help("Display inode information."),
         )
         .arg(
-            Arg::new("copy_friendly")
-                .long("copy_friendly")
+            Arg::new("copy-friendly")
+                .long("copy-friendly")
                 .short('c')
                 .help("Monocrome-friendly background for easy copy-pasting elsewhere."),
         )
