@@ -1,6 +1,6 @@
 # dusage
 
-[![CI](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml/badge.svg)](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml)
+[![CI](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/mihaigalos/dusage/actions/workflows/ci.yaml)
 [![CD](https://github.com/mihaigalos/dusage/actions/workflows/cd.yaml/badge.svg)](https://github.com/mihaigalos/dusage/actions/workflows/cd.yaml)
 [![Security Audit](https://github.com/mihaigalos/dusage/actions/workflows/audit.yaml/badge.svg)](https://github.com/mihaigalos/dusage/actions/workflows/audit.yaml)
 [![crates.io](https://img.shields.io/crates/d/dusage.svg)](https://crates.io/crates/dusage)
