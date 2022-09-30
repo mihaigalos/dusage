@@ -12,6 +12,6 @@ license = "MIT"
 [dependencies]
 autoclap = "0.2.5"
 byte-unit = "4.0.14"
-clap = { version = "3.2.22", features = ["cargo"] }
+clap = { version = "4.0.7", features = ["cargo"] }
 colored = "2"
 nix = "0.25.0"
