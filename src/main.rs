@@ -22,7 +22,7 @@ fn main() {
                 .action(ArgAction::SetTrue)
                 .help("Monocrome-friendly background for easy copy-pasting elsewhere."),
         );
-    let args = app.clone().try_get_matches().unwrap_or_else(|e| e.exit());
+    let args = app.try_get_matches().unwrap_or_else(|e| e.exit());
 
     dusage::driver::Driver::drive(args);
 }
