@@ -34,8 +34,8 @@ impl Stats {
         let used_inodes = total_inodes - available_inodes;
         let percent_inodes = used_inodes as f64 / total_inodes as f64;
 
-        if args.is_present("debug") {
-            if !args.is_present("inodes") {
+        if args.contains_id("debug") {
+            if !args.contains_id("inodes") {
                 println!(
                     "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
                     fs,
