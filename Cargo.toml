@@ -10,7 +10,7 @@ repository = "https://github.com/mihaigalos/dusage"
 license = "MIT"
 
 [dependencies]
-autoclap = "0.3.3"
+autoclap = "0.3.5"
 byte-unit = "4.0.14"
 clap = { version = "4.0.13", features = ["cargo", "string"] }
 colored = "2"
