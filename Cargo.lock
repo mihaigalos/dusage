@@ -36,10 +36,11 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "byte-unit"
-version = "4.0.14"
+version = "4.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95ebf10dda65f19ff0f42ea15572a359ed60d7fc74fdc984d90310937be0014b"
+checksum = "581ad4b3d627b0c09a0ccb2912148f839acaca0b93cf54cbe42b6c674e86079c"
 dependencies = [
+ "serde",
  "utf8-width",
 ]
 
@@ -155,6 +156,12 @@ name = "pin-utils"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
+
+[[package]]
+name = "serde"
+version = "1.0.147"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d193d69bae983fc11a79df82342761dfbf28a99fc8d203dca4c3c1b590948965"
 
 [[package]]
 name = "strsim"
