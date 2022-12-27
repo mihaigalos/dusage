@@ -12,9 +12,7 @@ impl Writer {
         Byte::from_bytes(input as u128)
             .get_appropriate_unit(true)
             .format(1)
-            .replace(' ', "")
-            .replace('i', "")
-            .replace('B', "")
+            .replace([' ', 'i', 'B'], "")
     }
 
     pub fn write(stats: Vec<Stats>, mut max_width: usize, args: ArgMatches) {
