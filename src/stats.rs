@@ -20,19 +20,19 @@ pub struct Stats {
 
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
-        let size_disk = statvfs.blocks() as u64 * statvfs.fragment_size() as u64;
-        let available_disk = statvfs.blocks_available() as u64 * statvfs.fragment_size() as u64;
-        let free_disk = statvfs.blocks_free() as u64 * statvfs.fragment_size() as u64;
+        let size_disk = statvfs.blocks() * statvfs.fragment_size();
+        let available_disk = statvfs.blocks_available() * statvfs.fragment_size();
+        let free_disk = statvfs.blocks_free() * statvfs.fragment_size();
 
-        let total_inodes = statvfs.files() as u64;
-        let available_inodes = statvfs.files_available() as u64;
+        let total_inodes = statvfs.files();
+        let available_inodes = statvfs.files_available();
 
         let used_disk = size_disk - free_disk;
-        let percent_disk = used_disk as f64 / size_disk as f64;
+        let percent_disk = used_disk / size_disk;
         let pos = grouped_pos_by_length(fs);
 
         let used_inodes = total_inodes - available_inodes;
-        let percent_inodes = used_inodes as f64 / total_inodes as f64;
+        let percent_inodes = used_inodes / total_inodes;
 
         if args.contains_id("debug") {
             if !args.contains_id("inodes") {
@@ -57,13 +57,13 @@ impl Stats {
             size_disk,
             used_disk,
             available_disk,
-            percent_disk: 100.0 * percent_disk,
+            percent_disk: 100.0 * percent_disk as f64,
             mount: mount.to_string(),
             pos,
             total_inodes,
             used_inodes,
             available_inodes,
-            percent_inodes: 100.0 * percent_inodes,
+            percent_inodes: 100.0 * percent_inodes as f64
         }
     }
 
