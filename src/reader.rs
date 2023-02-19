@@ -16,7 +16,7 @@ impl Reader {
         let file = match File::open("/proc/mounts") {
             Ok(f) => f,
             Err(e) => {
-                println!("Error: Could not open /proc/mounts - {}", e);
+                println!("Error: Could not open /proc/mounts - {e}");
                 process::exit(1);
             }
         };
@@ -34,6 +34,9 @@ impl Reader {
                         Err(_) => continue, // i.e.: no permissions to read
                     };
 
+                    if statvfs.blocks() == 0 {
+                        continue;
+                    }
                     let s = Stats::new(
                         fields[ProcFields::Filesystem.upcast()],
                         fields[ProcFields::Mountpoint.upcast()],
@@ -44,7 +47,7 @@ impl Reader {
                     max_width = cmp::max(max_width, s.filesystem.len());
                     stats.push(s);
                 }
-                Err(err) => println!("Error: {}", err),
+                Err(err) => println!("Error: {err}"),
             }
         }
 
