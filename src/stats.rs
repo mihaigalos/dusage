@@ -30,19 +30,19 @@ impl Stats {
         let available_inodes = statvfs.files_available();
 
         let used_disk = size_disk - free_disk;
-        let percent_disk = used_disk / size_disk;
+        let percent_disk = used_disk as f32 / size_disk as f32;
         let pos = grouped_pos_by_length(fs);
 
         let used_inodes = total_inodes - available_inodes;
-        let percent_inodes = used_inodes / total_inodes;
+        let percent_inodes = used_inodes as f32 / total_inodes as f32;
 
         if args.get_flag("debug") {
             if !args.get_flag("inodes") {
                 println!(
                     "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
                     fs,
-                    statvfs.blocks(),
-                    statvfs.fragment_size(),
+                    blocks,
+                    fragment_size,
                     size_disk,
                     free_disk,
                     available_disk
