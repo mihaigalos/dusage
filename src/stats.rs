@@ -40,12 +40,7 @@ impl Stats {
             if !args.get_flag("inodes") {
                 println!(
                     "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
-                    fs,
-                    blocks,
-                    fragment_size,
-                    size_disk,
-                    free_disk,
-                    available_disk
+                    fs, blocks, fragment_size, size_disk, free_disk, available_disk
                 );
             } else {
                 println!(
@@ -64,7 +59,7 @@ impl Stats {
             total_inodes,
             used_inodes,
             available_inodes,
-            percent_inodes: 100.0 * percent_inodes as f64
+            percent_inodes: 100.0 * percent_inodes as f64,
         }
     }
 

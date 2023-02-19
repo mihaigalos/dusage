@@ -10,13 +10,13 @@ use clap::{Arg, ArgAction};
 fn main() {
     let app: clap::Command = autoclap!()
         .arg(
-			 Arg::new("debug")
+            Arg::new("debug")
                 .long("debug")
                 .short('d')
                 .action(ArgAction::SetTrue)
                 .help("Print internally used data.")
                 .required(false),
-		)
+        )
         .arg(
             Arg::new("inodes")
                 .long("inodes")
@@ -26,13 +26,12 @@ fn main() {
                 .required(false),
         )
         .arg(
-
-			Arg::new("version")
-               .long("version")
-               .short('v')
-               .action(ArgAction::SetTrue)
-               .help("Prints current version.")
-               .required(false),
+            Arg::new("version")
+                .long("version")
+                .short('v')
+                .action(ArgAction::SetTrue)
+                .help("Prints current version.")
+                .required(false),
         )
         .arg(
             Arg::new("copy-friendly")
