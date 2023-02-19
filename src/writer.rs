@@ -20,7 +20,7 @@ impl Writer {
         if max_width < min_width {
             max_width = min_width;
         }
-        if args.contains_id("inodes") {
+        if args.get_flag("inodes") {
             Writer::write_inodes(stats, max_width, args);
         } else {
             Writer::write_disks(stats, max_width, args);
@@ -57,7 +57,7 @@ impl Writer {
             "Mounted on".yellow().bold(),
             width = max_width
         );
-        let is_copy_friendly = args.contains_id("copy-friendly");
+        let is_copy_friendly = args.get_flag("copy-friendly");
         for stat in stats {
             if Writer::is_relevant(&stat) {
                 Writer::write_inodes_stat(stat, max_width, is_copy_friendly);

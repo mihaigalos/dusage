@@ -77,7 +77,7 @@ impl Colorizer {
                     )
                 );
             } else {
-                result = format!("{}{}", result, background);
+                result = format!("{result}{background}");
             }
             if i < count_inode_units {
                 result = format!(
