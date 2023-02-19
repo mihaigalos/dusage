@@ -13,8 +13,34 @@ on:
         default: false
 
 jobs:
+  generate-cd-inputs:
+    runs-on: ubuntu-latest
+    outputs:
+      description: ${{ steps.set-outputs.outputs.description }}
+      homepage: ${{ steps.set-outputs.outputs.homepage }}
+      maintainer: ${{ steps.set-outputs.outputs.maintainer }}
+      project-name: ${{ steps.set-outputs.outputs.project-name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          set -eu pipefail
+          echo "::set-output name=description::$(grep ^description Cargo.toml | cut -d'=' -f2 | sed -e 's/\s*//' -e 's/\"//g')"
+          echo "::set-output name=homepage::$(grep ^repository Cargo.toml | cut -d'=' -f2 | sed -e 's/\s*//' -e 's/\"//g')"
+          echo "::set-output name=maintainer::$(grep ^authors Cargo.toml | cut -d'=' -f2 | sed -e 's/[][]//g' -e 's/\s*//' -e 's/\"//g')"
+          echo "::set-output name=project-name::$(grep ^name Cargo.toml | cut -d'=' -f2 | sed -e 's/\s*//' -e 's/\"//g')"
+
   cd:
-    uses: mihaigalos/config/.github/workflows/rust-cd-crates-io-only.yaml@main
+    uses: mihaigalos/config/.github/workflows/rust-cd-crates-io-and-github.yaml@main
+    needs:
+      - generate-cd-inputs
+    with:
+      COPYRIGHT_YEARS: 2021-3021
+      DESCRIPTION: ${{ needs.generate-cd-inputs.outputs.description }}
+      HOMEPAGE: ${{ needs.generate-cd-inputs.outputs.homepage }}
+      MAINTAINER: ${{ needs.generate-cd-inputs.outputs.maintainer }}
+      PROJECT_NAME: ${{ needs.generate-cd-inputs.outputs.project-name }}
     secrets:
       CARGO_API_KEY: ${{ secrets.CARGO_API_KEY }}
-
