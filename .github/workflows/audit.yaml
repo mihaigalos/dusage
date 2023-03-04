@@ -14,5 +14,4 @@ on:
 
 jobs:
   audit:
-    uses: mihaigalos/config/.github/workflows/rust-audit.yaml@main
-
+    uses: mihaigalos/workflows/.github/workflows/rust-audit.yaml@main
