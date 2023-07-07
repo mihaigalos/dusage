@@ -2,7 +2,7 @@
 name = "dusage"
 version = "0.3.5"
 edition = "2021"
-authors = ["Mihai Galos <mihaigalos@gmail.com>"]
+authors = ["Mihai Galos <mihai@galos.one>"]
 description = "💾 A command line disk usage information tool: disk usage (foreground), inodes (background)."
 categories = ["command-line-utilities", "filesystem"]
 keywords = ["disk", "disk-usage"]
