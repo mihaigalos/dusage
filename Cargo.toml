@@ -14,4 +14,4 @@ autoclap = "0.3.15"
 byte-unit = "4.0.19"
 clap = { version = "4.4.1", features = ["cargo", "string"] }
 colored = "2"
-nix = "0.27.0"
+nix = "0.27.1"
