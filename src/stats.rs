@@ -20,7 +20,7 @@ pub struct Stats {
 
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
-        let size_disk = u64::from(statvfs.blocks()) * u64::from(statvfs.fragment_size());
+        let size_disk = u64::from(statvfs.blocks()) * statvfs.fragment_size();
         let fragment_size = statvfs.fragment_size();
         let blocks = statvfs.blocks();
         let available_disk = u64::from(statvfs.blocks_available()) * statvfs.fragment_size();

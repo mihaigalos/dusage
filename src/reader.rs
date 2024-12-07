@@ -1,9 +1,6 @@
 use clap::ArgMatches;
 use nix::sys::statvfs::statvfs;
 use std::cmp;
-use std::fs::File;
-use std::io::BufRead;
-use std::io::BufReader;
 use std::process;
 use std::process::Command;
 
