@@ -20,14 +20,17 @@ pub struct Stats {
 
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
-        let size_disk = u64::from(statvfs.blocks()) * statvfs.fragment_size();
-        let fragment_size = statvfs.fragment_size();
-        let blocks = statvfs.blocks();
-        let available_disk = u64::from(statvfs.blocks_available()) * statvfs.fragment_size();
-        let free_disk = u64::from(statvfs.blocks_free()) * statvfs.fragment_size();
+        let blocks: u64 = statvfs.blocks().into();
+        let fragment_size: u64 = statvfs.fragment_size();
+        let blocks_available: u64 = statvfs.blocks_available().into();
+        let blocks_free: u64 = statvfs.blocks_free().into();
 
-        let total_inodes = u64::from(statvfs.files());
-        let available_inodes = u64::from(statvfs.files_available());
+        let size_disk = blocks * fragment_size;
+        let available_disk = blocks_available * fragment_size;
+        let free_disk = blocks_free * fragment_size;
+
+        let total_inodes: u64 = statvfs.files().into();
+        let available_inodes: u64 = statvfs.files_available().into();
 
         let used_disk = size_disk - free_disk;
         let percent_disk = used_disk as f32 / size_disk as f32;
