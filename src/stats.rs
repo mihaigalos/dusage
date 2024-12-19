@@ -31,9 +31,9 @@ impl Stats {
             #[cfg(target_os = "macos")]
             {
                 (
-                    u64::from(statvfs.blocks()),
-                    u64::from(statvfs.blocks_available()),
-                    u64::from(statvfs.blocks_free()),
+                    statvfs.blocks().into(),
+                    statvfs.blocks_available().into(),
+                    statvfs.blocks_free().into(),
                     statvfs.files().into(),
                     statvfs.files_available().into(),
                 )
