@@ -20,19 +20,47 @@ pub struct Stats {
 
 impl Stats {
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
-        let size_disk = statvfs.blocks() * statvfs.fragment_size();
-        let fragment_size = statvfs.fragment_size();
-        let blocks = statvfs.blocks();
-        let available_disk = statvfs.blocks_available() * statvfs.fragment_size();
-        let free_disk = statvfs.blocks_free() * statvfs.fragment_size();
+        // Get filesystem stats based on OS
+        let (blocks, blocks_available, blocks_free, total_inodes, available_inodes): (
+            u64,
+            u64,
+            u64,
+            u64,
+            u64,
+        ) = {
+            #[cfg(target_os = "macos")]
+            {
+                (
+                    statvfs.blocks().into(),
+                    statvfs.blocks_available().into(),
+                    statvfs.blocks_free().into(),
+                    statvfs.files().into(),
+                    statvfs.files_available().into(),
+                )
+            }
+            #[cfg(not(target_os = "macos"))]
+            {
+                (
+                    statvfs.blocks(),
+                    statvfs.blocks_available(),
+                    statvfs.blocks_free(),
+                    statvfs.files(),
+                    statvfs.files_available(),
+                )
+            }
+        };
 
-        let total_inodes = statvfs.files();
-        let available_inodes = statvfs.files_available();
+        let fragment_size: u64 = statvfs.fragment_size();
 
+        // Calculate disk usage stats
+        let size_disk = blocks * fragment_size;
+        let available_disk = blocks_available * fragment_size;
+        let free_disk = blocks_free * fragment_size;
         let used_disk = size_disk - free_disk;
         let percent_disk = used_disk as f32 / size_disk as f32;
         let pos = grouped_pos_by_length(fs);
 
+        // Calculate inode usage stats
         let used_inodes = total_inodes - available_inodes;
         let percent_inodes = used_inodes as f32 / total_inodes as f32;
 
