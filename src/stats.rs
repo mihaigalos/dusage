@@ -19,6 +19,7 @@ pub struct Stats {
 }
 
 impl Stats {
+    #[allow(clippy::useless_conversion)]
     pub fn new(fs: &str, mount: &str, statvfs: Statvfs, args: &ArgMatches) -> Stats {
         let blocks: u64 = statvfs.blocks().into();
         let fragment_size: u64 = statvfs.fragment_size();
