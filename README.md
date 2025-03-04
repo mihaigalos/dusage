@@ -62,3 +62,4 @@ make install
 ### Using precompiled binaries
 
 Precompiled binaries are available for multiple architectures in [Releases](https://github.com/mihaigalos/dusage/releases).
+
