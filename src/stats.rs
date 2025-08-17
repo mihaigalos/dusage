@@ -67,8 +67,7 @@ impl Stats {
         if args.get_flag("debug") {
             if !args.get_flag("inodes") {
                 println!(
-                    "{} blocks: {} fragment_size: {} size: {} free: {} available: {}",
-                    fs, blocks, fragment_size, size_disk, free_disk, available_disk
+                    "{fs} blocks: {blocks} fragment_size: {fragment_size} size: {size_disk} free: {free_disk} available: {available_disk}"
                 );
             } else {
                 println!(
