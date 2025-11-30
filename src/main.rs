@@ -39,6 +39,13 @@ fn main() {
                 .short('c')
                 .action(ArgAction::SetTrue)
                 .help("Monocrome-friendly background for easy copy-pasting elsewhere."),
+        )
+        .arg(
+            Arg::new("physical")
+                .long("physical")
+                .short('p')
+                .action(ArgAction::SetTrue)
+                .help("Display only physical disks (exclude tmpfs, devtmpfs, etc.)"),
         );
 
     let args = app.clone().try_get_matches().unwrap_or_else(|e| e.exit());
