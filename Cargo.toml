@@ -14,7 +14,7 @@ autoclap = "0.3.15"
 byte-unit = "4.0.19"
 clap = { version = "4.5.4", features = ["cargo", "string"] }
 colored = "2.1.0"
-nix = { version = "0.30.0", features = ["fs"] }
+nix = { version = "0.31.0", features = ["fs"] }
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ["cfg(tarpaulin_include)"] }
