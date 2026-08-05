@@ -93,6 +93,10 @@ impl Stats {
     pub fn is_network(&self) -> bool {
         self.pos == Filesystem::Network as usize
     }
+
+    pub fn is_physical(&self) -> bool {
+        self.filesystem.starts_with("/dev/")
+    }
 }
 
 fn grouped_pos_by_length(fs: &str) -> usize {
