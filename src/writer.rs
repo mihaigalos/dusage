@@ -40,7 +40,7 @@ impl Writer {
         );
         let is_copy_friendly = args.get_flag("copy-friendly");
         for stat in stats {
-            if Writer::is_relevant(&stat) {
+            if Writer::is_relevant(&stat, &args) {
                 Writer::write_disk_stat(stat, max_width, is_copy_friendly);
             }
         }
@@ -59,7 +59,7 @@ impl Writer {
         );
         let is_copy_friendly = args.get_flag("copy-friendly");
         for stat in stats {
-            if Writer::is_relevant(&stat) {
+            if Writer::is_relevant(&stat, &args) {
                 Writer::write_inodes_stat(stat, max_width, is_copy_friendly);
             }
         }
@@ -102,8 +102,8 @@ impl Writer {
         println!("{}", Colorizer::colorize_mountpoint(stat.mount));
     }
 
-    fn is_relevant(stat: &Stats) -> bool {
-        stat.size_disk > 0
+    fn is_relevant(stat: &Stats, args: &ArgMatches) -> bool {
+        stat.size_disk > 0 && (!args.get_flag("physical") || stat.is_physical())
     }
 }
 
