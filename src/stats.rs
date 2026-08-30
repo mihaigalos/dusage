@@ -50,7 +50,7 @@ impl Stats {
             }
         };
 
-        let fragment_size: u64 = statvfs.fragment_size();
+        let fragment_size: u64 = statvfs.fragment_size().into();
 
         // Calculate disk usage stats
         let size_disk = blocks * fragment_size;
